@@ -41,6 +41,8 @@ class HarvestLog extends Component {
   }
 
   handleSubmit(log) {
+    console.log('harvest log');
+    console.log(log);
     const { dispatch, fields } = this.props;
     const selectedCrops = parseCrops(log);
     const selectedFields = parseFields(log, fields);
@@ -81,17 +83,27 @@ class HarvestLog extends Component {
           className={styles.formContainer}
           onSubmit={(val) => this.handleSubmit(val.harvestLog)}
         >
-          <LogFormOneCrop model=".harvestLog" fields={fields} crops={crops} notesField={false} />
+          <LogFormOneCrop
+            model=".harvestLog"
+            fields={fields}
+            crops={crops}
+            notesField={false}
+            isCropNotRequired={false}
+          />
           <Unit
             model=".harvestLog.quantity_kg"
             title="Quantity"
             type={this.state.quantity_unit}
             validate
+            quantity={this.props.formData.quantity_kg}
           />
           <div>
             <div className={styles.noteTitle}>{this.props.t('common:NOTES')}</div>
             <div className={styles.noteContainer}>
-              <Control.textarea model=".harvestLog.notes" />
+              <Control.textarea
+                model=".harvestLog.notes"
+                defaultValue={this.props.formData.notes}
+              />
             </div>
           </div>
           <LogFooter isHarvestLog={true} />

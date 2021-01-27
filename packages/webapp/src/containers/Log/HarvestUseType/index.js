@@ -18,7 +18,7 @@ import { withTranslation } from 'react-i18next';
 import { userFarmSelector } from '../../userFarmSlice';
 import { setSelectedUseTypes, addHarvestUseType } from '../actions';
 import PurePopupMiniForm from '../../../components/PopupMiniForm';
-import { setAllHarvestUseTypesSelector } from '../selectors';
+import { setAllHarvestUseTypesSelector, formDataSelector } from '../selectors';
 
 class HarvestUseType extends Component {
   constructor(props) {
@@ -155,7 +155,9 @@ class HarvestUseType extends Component {
         >
           <Row className="show-grid">
             {this.props.allUseType.map((type) => {
-              const taskName = this.props.t(`harvest_uses:${type.harvest_use_type_translation_key}`);
+              const taskName = this.props.t(
+                `harvest_uses:${type.harvest_use_type_translation_key}`,
+              );
               const buttonImg = this.assignImage(taskName);
               return (
                 <Col
@@ -194,7 +196,12 @@ class HarvestUseType extends Component {
         )}
 
         <div className={styles.bottomContainer}>
-          <div className={styles.backButton} onClick={() => history.push('/harvest_log')}>
+          <div
+            className={styles.backButton}
+            onClick={() => {
+              history.push('/harvest_log');
+            }}
+          >
             {this.props.t('common:BACK')}
           </div>
           <button
@@ -230,6 +237,7 @@ const mapStateToProps = (state) => {
   return {
     users: userFarmSelector(state),
     allUseType: setAllHarvestUseTypesSelector(state),
+    formData: formDataSelector(state),
   };
 };
 

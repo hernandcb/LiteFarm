@@ -10,11 +10,17 @@ import { fieldsSelector } from '../../../containers/fieldSlice';
 import { getFieldCrops, getFields } from '../../../containers/saga';
 import { currentFieldCropsSelector } from '../../../containers/fieldCropSlice';
 import { withTranslation } from 'react-i18next';
+import { formDataSelector } from '../../../containers/Log/selectors';
+import { setFormData } from '../../../containers/Log/actions';
 
 class LogFormOneCrop extends React.Component {
   constructor(props) {
     super(props);
     const { selectedFields, selectedCrops, dispatch, parent, model } = this.props;
+
+    dispatch(setFormData(this.props.formData));
+    console.log('form data inside log form');
+    console.log(this.props.formData);
     dispatch(getFieldCrops());
     dispatch(getFields());
 
@@ -38,8 +44,17 @@ class LogFormOneCrop extends React.Component {
       crops: [],
       fieldOptions: [],
       displayLiveCropMessage: false,
+      savedState: {
+        field: this.props.formData.field,
+        crop: this.props.formData.crop,
+      },
     };
     this.setCropsOnFieldSelect = this.setCropsOnFieldSelect.bind(this);
+    this.setDefaultCrop = this.setDefaultCrop.bind(this);
+
+    if (this.props.formData.field) {
+      this.setCropsOnFieldSelect(this.props.formData.field);
+    }
 
     if (selectedFields) {
       this.setCropsOnFieldSelect(selectedFields[0]);
@@ -61,6 +76,7 @@ class LogFormOneCrop extends React.Component {
   };
 
   setCropsOnFieldSelect(option) {
+    console.log('setCropsOnFieldSelect');
     const { fields, parent, model } = this.props;
     let { crops } = this.state;
     let cropOptionsMap = this.state.cropOptionsMap;
@@ -97,6 +113,13 @@ class LogFormOneCrop extends React.Component {
       fieldSelected: true,
       cropValue: undefined,
     });
+  }
+
+  setDefaultCrop(option) {
+    return {
+      value: option.value,
+      label: option.label,
+    };
   }
 
   componentDidMount() {
@@ -159,11 +182,20 @@ class LogFormOneCrop extends React.Component {
       typeOptions,
       customFieldset,
       isCropNotRequired,
-      isCropNotNeeded,
     } = this.props;
     const { displayLiveCropMessage, fieldOptions } = this.state;
+    let crop_id;
+    this.state.savedState.crop
+      ? (crop_id = Object.keys(this.state.savedState.crop))
+      : (crop_id = null);
+    if (Object.entries(this.props.formData.field).length !== 0) {
+      this.state.selectedFields = this.props.formData.field;
+      console.log(this.state.cropOptionsMap[this.state.selectedFields.value]);
+    }
+
     // format options for react-select dropdown components
     const parsedTypeOptions = typeOptions && typeOptions.map((t) => ({ value: t, label: t }));
+    const defaultSelectedFields = this.state.selectedFields;
 
     return (
       <Fieldset model={model}>
@@ -182,7 +214,9 @@ class LogFormOneCrop extends React.Component {
             options={fieldOptions || []}
             placeholder="Select Field"
             isSearchable={false}
-            value={this.state.selectedFields}
+            defaultValue={
+              this.state.savedState.field ? this.state.savedState.field : defaultSelectedFields
+            }
             validators={{
               required: (val) => {
                 if (val) {
@@ -200,7 +234,7 @@ class LogFormOneCrop extends React.Component {
             }}
           />
         </div>
-        {!isCropNotNeeded && this.state.selectedFields && this.state.selectedFields && (
+        {!isCropNotRequired && this.state.selectedFields && (
           <div className={styles.defaultFormDropDown}>
             <label>Crop</label>
             <Control
@@ -208,6 +242,7 @@ class LogFormOneCrop extends React.Component {
               component={DropDown}
               options={this.state.cropOptionsMap[this.state.selectedFields.value]}
               placeholder="Select Field Crop"
+              defaultValue={this.props.formData.crop[crop_id[0]]}
               isSearchable={false}
               validators={
                 isCropNotRequired
@@ -266,6 +301,7 @@ const mapStateToProps = (state) => {
   return {
     crops: currentFieldCropsSelector(state),
     fields: fieldsSelector(state),
+    formData: formDataSelector(state),
   };
 };
 

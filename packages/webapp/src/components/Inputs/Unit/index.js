@@ -22,6 +22,7 @@ class Unit extends React.Component {
       validate,
       hideLabel,
       isHarvestAllocation,
+      quantity,
     } = this.props;
     let showLabel;
     if (!hideLabel) {
@@ -104,6 +105,7 @@ class Unit extends React.Component {
                   positive: this.isPositive,
                 }}
                 parser={this.parseNumber}
+                defaultValue={quantity}
               />
               <div
                 style={

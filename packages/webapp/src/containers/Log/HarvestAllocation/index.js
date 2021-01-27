@@ -9,6 +9,7 @@ import Unit from '../../../components/Inputs/Unit';
 import { withTranslation } from 'react-i18next';
 import { getFieldCrops } from '../../saga';
 import { formDataSelector, selectedUseTypeSelector, formValueSelector } from '../selectors';
+import { setFormData } from '../actions';
 import { toastr } from 'react-redux-toastr';
 import { addLog } from '../Utility/actions';
 import { userFarmSelector } from '../../userFarmSlice';
@@ -42,10 +43,12 @@ class HarvestAllocation extends Component {
     let sum = Object.keys(val).reduce((sum, key) => sum + Number(val[key]), 0);
 
     if (sum !== Number(this.props.formData.quantity_kg)) {
-      console.log(sum, this.props.formData.quantity_kg)
       toastr.error('Total does not equal the amount to allocate');
     } else {
       this.props.dispatch(addLog(this.props.formValue));
+      setTimeout(() => {
+        this.props.dispatch(setFormData({ notes: '', field: {}, quantity_kg: '', crop: {} }));
+      }, 200);
     }
   }
 
@@ -91,7 +94,11 @@ class HarvestAllocation extends Component {
           <div className={styles.bottomContainer}>
             <div
               className={styles.backButton}
-              onClick={() => this.props.history.push('/harvest_use_type')}
+              onClick={() => {
+                console.log('harvest allocation');
+                console.log(this.props.formData);
+                this.props.history.push('/harvest_use_type');
+              }}
             >
               {this.props.t('common:BACK')}
             </div>
