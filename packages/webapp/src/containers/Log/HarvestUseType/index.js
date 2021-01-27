@@ -18,7 +18,11 @@ import { withTranslation } from 'react-i18next';
 import { userFarmSelector } from '../../userFarmSlice';
 import { setSelectedUseTypes, addHarvestUseType } from '../actions';
 import PurePopupMiniForm from '../../../components/PopupMiniForm';
-import { setAllHarvestUseTypesSelector, formDataSelector } from '../selectors';
+import {
+  setAllHarvestUseTypesSelector,
+  selectedUseTypeSelector,
+  formDataSelector,
+} from '../selectors';
 
 class HarvestUseType extends Component {
   constructor(props) {
@@ -69,6 +73,11 @@ class HarvestUseType extends Component {
       disabled: true,
     };
     this.assignImage = this.assignImage.bind(this);
+    this.logClick = this.logClick.bind(this);
+
+    this.props.useType.some((item) => {
+      this.logClick(item);
+    });
   }
 
   assignImage(useTypeName) {
@@ -78,6 +87,7 @@ class HarvestUseType extends Component {
   }
 
   logClick(type) {
+    console.log(type);
     this.setState({
       useTypeClicked: !this.state.useTypeClicked,
       currId: type.harvest_use_type_id,
@@ -133,6 +143,7 @@ class HarvestUseType extends Component {
   };
 
   render() {
+    console.log(this.props.useType);
     return (
       <div className={styles.logContainer}>
         <div className={styles.textContainer}>
@@ -175,6 +186,28 @@ class HarvestUseType extends Component {
                       )
                         ? this.state.useTypeSelected
                         : this.state.useTypeUnSelected
+                      // (this.props.useType.some(
+                      //   (item1) => item1.harvest_use_type_id === type.harvest_use_type_id,
+                      // )
+                      // ? this.state.useTypeSelected
+                      // : this.state.useTypeUnSelected
+                      // )
+                      // (this.props.useType.some(
+                      //   (item) => {
+                      //     console.log("there")
+                      //     item.harvest_use_type_id === type.harvest_use_type_id},
+                      //   )
+                      //   ? this.state.useTypeSelected
+                      //   :
+                      //   this.state.useTypeUnSelected) ||
+                      //   (this.state.selectedUseTypes.some(
+                      //     (item) => {
+                      //       console.log("here")
+                      //       item.harvest_use_type_id === type.harvest_use_type_id
+                      //     },
+                      //     )
+                      //     ? this.state.useTypeSelected
+                      //     : this.state.useTypeUnSelected)
                     }
                     className={styles.circleButton}
                   >
@@ -238,6 +271,7 @@ const mapStateToProps = (state) => {
     users: userFarmSelector(state),
     allUseType: setAllHarvestUseTypesSelector(state),
     formData: formDataSelector(state),
+    useType: selectedUseTypeSelector(state),
   };
 };
 
