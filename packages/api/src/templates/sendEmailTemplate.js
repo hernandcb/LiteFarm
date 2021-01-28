@@ -46,6 +46,11 @@ class sendEmailTemplate {
         clientId: credentials.LiteFarm_Service_Gmail.client_id,
         clientSecret: credentials.LiteFarm_Service_Gmail.client_secret,
       },
+      dkim: {
+        domainName: "https://www.litefarm.org/",
+        keySelector: "2021",
+        // privateKey: "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBg..."
+      }
     });
     const subjectKey = Object.keys(emails).find((k) => emails[k].path === template_path.path);
     const subject = addReplacements(template_path, subjectTranslation[language.substring(0, 2)][subjectKey]);

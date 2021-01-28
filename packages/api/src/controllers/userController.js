@@ -32,6 +32,8 @@ const { sendEmailTemplate, emails } = require('../templates/sendEmailTemplate');
 class userController extends baseController {
   static addUser() {
     return async (req, res) => {
+      
+
       const { email, first_name, last_name, password, gender, birth_year, language_preference } = req.body;
       const userData = {
         email,
@@ -101,6 +103,7 @@ class userController extends baseController {
       const { first_name, last_name, email: reqEmail, farm_id, role_id, wage, gender, birth_year, phone_number } = req.body;
       const { type: wageType, amount: wageAmount } = wage || {};
       const email = reqEmail && reqEmail.toLowerCase();
+      console.log("addInvitedUser controller")
       /* Start of input validation */
       const requiredProps = {
         email,
@@ -200,6 +203,7 @@ class userController extends baseController {
 
   static async createTokenSendEmail(user, userFarm, farm_name) {
     let token;
+    console.log("createTokenSendEmail")
     const emailSent = await emailTokenModel.query().where({
       user_id: userFarm.user_id,
       farm_id: userFarm.farm_id,
@@ -225,6 +229,7 @@ class userController extends baseController {
   }
 
   static async sendTokenEmail(farm, user, token) {
+    console.log("sendTokenEmail")
     const sender = 'system@litefarm.org';
     const template_path = emails.INVITATION;
     template_path.subjectReplacements = farm;
