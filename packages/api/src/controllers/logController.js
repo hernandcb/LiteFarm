@@ -46,6 +46,7 @@ class logController extends baseController {
       }catch(exception){
         await trx.rollback();
         var error = ExceptionHandler.handleException(exception);
+        console.log(error)
         res.status(error.status).json({ error: error.message });
       }
     };
@@ -157,10 +158,12 @@ class logController extends baseController {
   }
 
   static putLog(){
+    console.log("put log")
     return async(req, res)=>{
       const trx = await transaction.start(Model.knex());
       try{
         if(req.params.activity_id){
+          console.log("req.params.activity_id")
           await logServices.patchLog(req.params.activity_id, trx, req);
           await trx.commit();
           res.sendStatus(200);
@@ -171,6 +174,8 @@ class logController extends baseController {
       }catch(exception){
         await trx.rollback();
         const error = ExceptionHandler.handleException(exception);
+        console.log("error is")
+        console.log(error)
         res.status(error.status).json({ error: error.message });
       }
     }
@@ -183,9 +188,13 @@ class logServices extends baseController {
   }
 
   static async insertLog({ body, user }, transaction){
+    console.log("enter insert log")
     const logModel = getActivityModelKind(body.activity_kind);
     const user_id = user.user_id;
+    console.log(user_id)
     const activityLog = await super.post(ActivityLogModel, body, transaction, { user_id });
+    console.log("activity log is")
+    console.log(activityLog)
 
     //insert crops,fields and beds
     await super.relateModels(activityLog, fieldCrop, body.crops, transaction);
@@ -249,6 +258,9 @@ class logServices extends baseController {
   }
 
   static async patchLog(logId, transaction, { body, user }){
+    console.log("patch log")
+    console.log("body.selectedUseTypes")
+    console.log(body.selectedUseTypes)
     const log = await super.getIndividual(ActivityLogModel, logId);
     const user_id = user.user_id;
     const activityLog = await super.updateIndividualById(ActivityLogModel, logId, body, transaction, { user_id });
@@ -269,7 +281,7 @@ class logServices extends baseController {
         const data = {
           activity_id: activityLog.activity_id,
           harvest_use_type_id: use.harvest_use_type_id,
-          quantity_kg: use.quantity,
+          quantity_kg: !use.quantity ? use.quantity_kg : use.quantity,
         }
         await super.post(HarvestUseModel, data, transaction)
       }

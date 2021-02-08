@@ -4,7 +4,7 @@ import PageTitle from '../../../components/PageTitle';
 import { actions, Form } from 'react-redux-form';
 import moment from 'moment';
 import styles from '../styles.scss';
-import { getUnit, convertToMetric } from '../../../util';
+import { getUnit, convertToMetric, roundToTwoDecimal, convertFromMetric } from '../../../util';
 import Unit from '../../../components/Inputs/Unit';
 import { withTranslation } from 'react-i18next';
 import { getFieldCrops } from '../../saga';
@@ -13,6 +13,8 @@ import {
   selectedUseTypeSelector,
   formValueSelector,
   harvestAllocationSelector,
+  isEditSelector,
+  currentLogSelector,
 } from '../selectors';
 import { toastr } from 'react-redux-toastr';
 import { addLog, editLog } from '../Utility/actions';
@@ -40,9 +42,12 @@ class HarvestAllocation extends Component {
   }
 
   handleSubmit(val) {
+    let name = !this.props.useType[0].harvest_use_type_name
+      ? this.props.useType[0].harvestUseType.harvest_use_type_name
+      : this.props.useType[0].harvest_use_type_name;
     this.props.useType.map((obj) => {
-      if (obj.harvest_use_type_name in val) {
-        obj.quantity = val[obj.harvest_use_type_name];
+      if (name in val) {
+        obj.quantity = val[name];
       }
     });
     let sum = Object.keys(val).reduce((sum, key) => sum + Number(val[key]), 0);
@@ -68,6 +73,17 @@ class HarvestAllocation extends Component {
     this.props.dispatch(saveHarvestAllocationWip(event.harvestAllocation));
   }
 
+  setDefaultQuantity(quantity) {
+    // if (this.state.quantity_unit === 'lb') {
+    //   this.setState({
+    //     quantity_unit: 'kg',
+    //   });
+    //   return roundToTwoDecimal(convertFromMetric(quantity, this.state.quantity_unit, 'kg'));
+
+    // }
+    return roundToTwoDecimal(quantity);
+  }
+
   render() {
     return (
       <div className="page-container">
@@ -90,8 +106,10 @@ class HarvestAllocation extends Component {
           onChange={this.handleChange.bind(this)}
         >
           {this.props.useType.map((type, index) => {
-            const typeName = type.harvest_use_type_name;
-            let model = '.harvestAllocation.' + type.harvest_use_type_name;
+            const typeName = !type.harvest_use_type_name
+              ? type.harvestUseType.harvest_use_type_name
+              : type.harvest_use_type_name;
+            let model = '.harvestAllocation.' + typeName;
             return (
               <div
                 style={
@@ -106,7 +124,13 @@ class HarvestAllocation extends Component {
                   type={this.state.quantity_unit}
                   validate
                   isHarvestAllocation={true}
-                  defaultValue={type.quantity !== 0 ? type.quantity : null}
+                  // defaultValue={type.quantity_kg !== 0 ? type.quantity_kg : null}
+                  defaultValue={
+                    !type.quantity_kg
+                      ? this.setDefaultQuantity(type.quantity)
+                      : this.setDefaultQuantity(type.quantity_kg)
+                  }
+                  // defaultValue={type.quantity ? this.setDefaultQuantity(type.quantity) : this.setDefaultQuantity(type.quantity_kg)}
                 />
               </div>
             );
@@ -138,6 +162,8 @@ const mapStateToProps = (state) => {
     useType: selectedUseTypeSelector(state),
     formValue: formValueSelector(state),
     harvestAllocation: harvestAllocationSelector(state),
+    isEdit: isEditSelector(state),
+    selectedLog: currentLogSelector(state),
   };
 };
 

@@ -151,6 +151,11 @@ class LogFormOneCrop extends React.Component {
     });
   };
 
+  setDefaultField(defaultField) {
+    let data = { value: defaultField.field_id, label: defaultField.field_name };
+    return data;
+  }
+
   render() {
     const {
       model,
@@ -184,9 +189,7 @@ class LogFormOneCrop extends React.Component {
             options={fieldOptions || []}
             placeholder="Select Field"
             isSearchable={false}
-            defaultValue={
-              !Object.keys(defaultField).length ? this.state.selectedFields : defaultField
-            }
+            defaultValue={!defaultField.label ? this.setDefaultField(defaultField) : defaultField}
             validators={{
               required: (val) => {
                 if (val) {

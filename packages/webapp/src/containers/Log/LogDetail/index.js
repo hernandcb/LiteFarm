@@ -18,6 +18,7 @@ import { withTranslation } from 'react-i18next';
 import { fieldsSelector } from '../../fieldSlice';
 import { currentFieldCropsSelector } from '../../fieldCropSlice';
 import { Semibold } from '../../../components/Typography';
+import { editingLog } from '../actions';
 
 class LogDetail extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class LogDetail extends Component {
       ratePerHr: getUnit(farm, 'l/h', 'gal/h'),
       showModal: false,
     };
+    console.log(this.props.selectedLog);
   }
 
   componentDidMount() {
@@ -113,7 +115,12 @@ class LogDetail extends Component {
 
   editLog = (activityKind) => {
     const url = this.getEditURL(activityKind);
-    history.push(`${url}/edit`);
+    if (activityKind === 'harvest') {
+      this.props.dispatch(editingLog(true));
+      history.push(`${url}`);
+    } else {
+      history.push(`${url}/edit`);
+    }
   };
 
   confirmDelete = () => {
@@ -230,14 +237,12 @@ class LogDetail extends Component {
                   key={dropDown}
                   id={`dropdown-basic-${dropDown}`}
                 >
-                  {selectedLog.activity_kind !== 'harvest' && (
-                    <Dropdown.Item
-                      eventKey="0"
-                      onClick={() => this.editLog(selectedLog.activity_kind)}
-                    >
-                      {this.props.t('common:EDIT')}
-                    </Dropdown.Item>
-                  )}
+                  <Dropdown.Item
+                    eventKey="0"
+                    onClick={() => this.editLog(selectedLog.activity_kind)}
+                  >
+                    {this.props.t('common:EDIT')}
+                  </Dropdown.Item>
                   <Dropdown.Item eventKey="1" onClick={() => this.confirmDelete()}>
                     {this.props.t('common:DELETE')}
                   </Dropdown.Item>
@@ -537,7 +542,8 @@ class LogDetail extends Component {
                 <div className={styles.innerInfo}>
                   <div>{this.props.t('LOG_DETAIL.FLOW_RATE')}</div>
                   <span>
-                    {selectedLog.irrigationLog['flow_rate_l/min']}{' l/min'}
+                    {selectedLog.irrigationLog['flow_rate_l/min']}
+                    {' l/min'}
                   </span>
                 </div>
               </div>

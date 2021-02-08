@@ -9,7 +9,7 @@ import { loginSelector } from '../../userFarmSlice';
 import { getHeader, axios } from '../../saga';
 import i18n from '../../../lang/i18n';
 import { setAllHarvestUseTypes, getHarvestUseTypes } from '../actions';
-import { selectedUseTypeSelector } from '../selectors';
+import { selectedUseTypeSelector, defaultDateSelector } from '../selectors';
 
 export function* addLog(action) {
   const { logURL } = apiConfig;
@@ -22,6 +22,7 @@ export function* addLog(action) {
     selectedUseTypes: selectedUseTypes,
   };
   try {
+    console.log('try');
     const result = yield call(axios.post, logURL, log, header);
     if (result) {
       history.push('/log');
@@ -77,9 +78,12 @@ export function* addCustomHarvestUseTypeSaga(action) {
 
 export function* editLog(action) {
   const { logURL } = apiConfig;
+
   let { user_id, farm_id } = yield select(loginSelector);
   const header = getHeader(user_id, farm_id);
   const selectedUseTypes = yield select(selectedUseTypeSelector);
+  console.log('selected use types');
+  console.log(selectedUseTypes);
   const log = { ...action.formValue, user_id, farm_id, selectedUseTypes };
 
   try {
@@ -90,6 +94,7 @@ export function* editLog(action) {
     }
   } catch (e) {
     console.log('failed to edit log');
+    console.log(e);
     toastr.error(i18n.t('message:LOG.ERROR.EDIT'));
   }
 }

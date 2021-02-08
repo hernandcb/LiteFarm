@@ -34,6 +34,8 @@ const startEndDateSelector = createSelector(logPageSelector, (state) => ({
   endDate: state.endDate,
 }));
 
+const isEditSelector = createSelector(logPageSelector, (state) => state.isEdit);
+
 const defaultDateSelector = createSelector(logPageSelector, (state) => state.defaultDate);
 
 const harvestAllocationSelector = createSelector(
@@ -51,4 +53,5 @@ export {
   startEndDateSelector,
   defaultDateSelector,
   harvestAllocationSelector,
+  isEditSelector,
 };

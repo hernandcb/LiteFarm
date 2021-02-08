@@ -22,11 +22,15 @@ import {
   setAllHarvestUseTypesSelector,
   selectedUseTypeSelector,
   harvestAllocationSelector,
+  currentLogSelector,
+  isEditSelector,
 } from '../selectors';
+import { convertToMetric, getUnit, convertFromMetric, roundToTwoDecimal } from '../../../util';
 
 class HarvestUseType extends Component {
   constructor(props) {
     super(props);
+    const { farm } = this.props;
     this.state = {
       defaultUseTypeNames: [
         'Sales',
@@ -71,12 +75,26 @@ class HarvestUseType extends Component {
       currId: 0,
       showAdd: false,
       disabled: true,
+      quantity_unit: getUnit(farm, 'kg', 'lb'),
+      setDefaultValues: false,
     };
     this.assignImage = this.assignImage.bind(this);
+    this.getFarmUnit = this.getFarmUnit.bind(this);
 
     if (this.props.useType) {
-      this.props.useType.some((item) => this.logClick(item));
+      this.props.useType.some((item) => this.logClick(item, false));
     }
+
+    if (this.props.isEdit) {
+      this.props.selectedLog.harvestUse.some((elem) => {
+        this.logClick(elem, true);
+        this.state.setDefaultValues = true;
+      });
+    }
+  }
+
+  getFarmUnit() {
+    return this.state.quantity_unit;
   }
 
   assignImage(useTypeName) {
@@ -85,7 +103,7 @@ class HarvestUseType extends Component {
     } else return OtherImg;
   }
 
-  logClick(type) {
+  logClick(type, bool) {
     this.setState({
       useTypeClicked: !this.state.useTypeClicked,
       currId: type.harvest_use_type_id,
@@ -102,21 +120,23 @@ class HarvestUseType extends Component {
         selectedUses: selectedUses,
       });
     } else {
-      if (
-        this.state.selectedUseTypes.some(
-          (item) => item.harvest_use_type_id === type.harvest_use_type_id,
-        )
-      ) {
-        let index = this.state.selectedUseTypes
-          .map(function (x) {
-            return x.harvest_use_type_id;
-          })
-          .indexOf(type.harvest_use_type_id);
-        let selectedUses = this.state.selectedUseTypes;
-        selectedUses.splice(index, 1);
-        this.setState({
-          selectedUses: selectedUses,
-        });
+      if (!bool) {
+        if (
+          this.state.selectedUseTypes.some(
+            (item) => item.harvest_use_type_id === type.harvest_use_type_id,
+          )
+        ) {
+          let index = this.state.selectedUseTypes
+            .map(function (x) {
+              return x.harvest_use_type_id;
+            })
+            .indexOf(type.harvest_use_type_id);
+          let selectedUses = this.state.selectedUseTypes;
+          selectedUses.splice(index, 1);
+          this.setState({
+            selectedUses: selectedUses,
+          });
+        }
       }
     }
 
@@ -140,6 +160,8 @@ class HarvestUseType extends Component {
     }
   };
   render() {
+    const { selectedLog, isEdit } = this.props;
+    let { setDefaultValues } = this.state;
     return (
       <div className={styles.logContainer}>
         <PageTitle
@@ -223,7 +245,18 @@ class HarvestUseType extends Component {
                     ? (key.quantity_kg = Number(harvestAlloc[name]))
                     : (key.quantity = Number(harvestAlloc[name]));
                 } else {
-                  !key.harvest_use_type_name ? (key.quantity_kg = 0) : (key.quantity = 0);
+                  if (isEdit) {
+                    selectedLog.harvestUse.map((elem) => {
+                      if (name === elem.harvestUseType.harvest_use_type_name) {
+                        !key.harvest_use_type_name
+                          ? (key.quantity_kg = Number(elem.quantity_kg))
+                          : (key.quantity = Number(elem.quantity));
+                      }
+                    });
+                    setDefaultValues = false;
+                  } else {
+                    !key.harvest_use_type_name ? (key.quantity_kg = 0) : (key.quantity = 0);
+                  }
                 }
                 return key;
               });
@@ -254,6 +287,9 @@ const mapStateToProps = (state) => {
     allUseType: setAllHarvestUseTypesSelector(state),
     useType: selectedUseTypeSelector(state),
     harvestAllocation: harvestAllocationSelector(state),
+    selectedLog: currentLogSelector(state),
+    isEdit: isEditSelector(state),
+    farm: userFarmSelector(state),
   };
 };
 

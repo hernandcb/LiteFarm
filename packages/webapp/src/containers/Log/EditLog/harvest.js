@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PageTitle from '../../../components/PageTitle';
-import { currentLogSelector, logSelector } from '../selectors';
+import { currentLogSelector, logSelector, defaultDateSelector } from '../selectors';
 import DateContainer from '../../../components/Inputs/DateContainer';
 import { actions, Control, Form } from 'react-redux-form';
 import LogFooter from '../../../components/LogFooter';
@@ -17,7 +17,7 @@ import { withTranslation } from 'react-i18next';
 import { fieldsSelector } from '../../fieldSlice';
 import { currentFieldCropsSelector } from '../../fieldCropSlice';
 import { getFieldCrops } from '../../saga';
-import { setFormData, setFormValue, setSelectedUseTypes } from '../actions';
+import { setFormData, setFormValue, setSelectedUseTypes, setDefaultDate } from '../actions';
 import TextArea from '../../../components/Form/TextArea';
 
 class HarvestLog extends Component {
@@ -36,9 +36,11 @@ class HarvestLog extends Component {
   }
 
   setDate(date) {
+    const { dispatch } = this.props;
     this.setState({
       date: date,
     });
+    dispatch(setDefaultDate(date._i));
   }
 
   componentDidMount() {
@@ -113,7 +115,7 @@ class HarvestLog extends Component {
           title={`${this.props.t('common:EDIT')} ${this.props.t('LOG_HARVEST.TITLE')}`}
         />
         <DateContainer
-          date={this.state.date}
+          date={this.props.defaultDate ? moment(this.props.defaultDate) : this.state.date}
           onDateChange={this.setDate}
           placeholder={this.props.t('LOG_COMMON.CHOOSE_DATE')}
         />
@@ -169,6 +171,7 @@ const mapStateToProps = (state) => {
     logs: logSelector(state),
     selectedLog: currentLogSelector(state),
     farm: userFarmSelector(state),
+    defaultDate: defaultDateSelector(state),
   };
 };
 

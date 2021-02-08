@@ -19,6 +19,7 @@ import {
   setFormData,
   setSelectedUseTypes,
   saveHarvestAllocationWip,
+  editingLog,
 } from '../actions';
 
 class NewLog extends Component {
@@ -27,6 +28,7 @@ class NewLog extends Component {
     this.props.dispatch(setFormData({ notes: '', field: {}, crop: {}, quantity_kg: null }));
     this.props.dispatch(setSelectedUseTypes([]));
     this.props.dispatch(saveHarvestAllocationWip({}));
+    this.props.dispatch(editingLog(false));
   }
   render() {
     return (
