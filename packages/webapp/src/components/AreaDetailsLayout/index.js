@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Input from '../Form/Input';
-import { useForm } from 'react-hook-form';
 import FormTitleLayout from '../Form/FormTitleLayout';
 import Button from '../Form/Button';
+import { fieldEnum } from '../../containers/fieldSlice';
 
 export default function AreaDetailsLayout({
   name,
@@ -12,26 +12,13 @@ export default function AreaDetailsLayout({
   onBack,
   onSubmit,
   onError,
+  register,
+  setValue,
+  disabled,
+  isNameRequired,
+  children,
 }) {
   const { t } = useTranslation();
-
-  const { register, handleSubmit, watch, errors } = useForm({
-    mode: 'onTouched',
-  });
-
-  const AREAFIELD = 'areaField';
-  const areaField = watch(AREAFIELD, false);
-  const areaInputRegister = register();
-
-  const PERIMETERFIELD = 'perimeterField';
-  const perimeterField = watch(PERIMETERFIELD, false);
-  const perimeterInputRegister = register();
-
-  const NAMEFIELD = 'nameField';
-  const nameField = watch(NAMEFIELD, false);
-  const nameInputRegister = register();
-
-  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     name === 'Farm site boundary'
@@ -61,8 +48,8 @@ export default function AreaDetailsLayout({
         type="text"
         optional={name === 'Farm site boundary' ? true : false}
         style={{ marginBottom: '40px' }}
-        name={name !== 'Farm site boundary' ? NAMEFIELD : null}
-        inputRef={name !== 'Farm site boundary' ? nameInputRegister : null}
+        name={fieldEnum.name}
+        inputRef={register({ required: isNameRequired })}
       />
       <div>
         <Input
@@ -80,7 +67,7 @@ export default function AreaDetailsLayout({
           inputRef={perimeterInputRegister}
         />
       </div>
-      {additionalProperties}
+      {children}
       <Input label={t('common:NOTES')} type="text" optional style={{ marginBottom: '40px' }} />
     </FormTitleLayout>
   );

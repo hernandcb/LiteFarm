@@ -3,6 +3,11 @@ import { loginSelector, onLoadingFail, onLoadingStart, onLoadingSuccess } from '
 import { createSelector } from 'reselect';
 import { pick } from '../util';
 
+export const fieldEnum = {
+  name: 'name',
+  area: 'area',
+};
+
 const getFieldFromLocationObject = (location) => {
   return {
     farm_id: location.farm_id,
