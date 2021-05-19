@@ -24,6 +24,7 @@ jest.mock('../src/middleware/acl/checkJwt');
 const mocks = require('./mock.factories');
 const { tableCleanup } = require('./testEnvironment');
 const cropVarietyModel = require('../src/models/cropVarietyModel');
+const { test } = require('../knexfile');
 
 describe('CropVariety Tests', () => {
   let middleware;
@@ -37,6 +38,15 @@ describe('CropVariety Tests', () => {
 
   function postCropVarietyRequest(data, { user_id = newOwner.user_id, farm_id = farm.farm_id }, callback) {
     chai.request(server).post('/crop_variety')
+      .set('Content-Type', 'application/json')
+      .set('user_id', user_id)
+      .set('farm_id', farm_id)
+      .send(data)
+      .end(callback);
+  }
+
+  function postNewCropAndVarietyRequest(data, { user_id = newOwner.user_id, farm_id = farm.farm_id }, callback) {
+    chai.request(server).post('/crop_variety/new_crop_and_variety')
       .set('Content-Type', 'application/json')
       .set('user_id', user_id)
       .set('farm_id', farm_id)
@@ -213,7 +223,7 @@ describe('CropVariety Tests', () => {
 
     });
 
-    describe('Delete cropVariety', function() {
+    describe('Delete cropVariety', function () {
       let cropVarietyNotInUse;
 
 
@@ -437,7 +447,7 @@ describe('CropVariety Tests', () => {
       });
     });
 
-    describe('crop_variety_name + genus + species uniqueness tests', function() {
+    describe('crop_variety_name + genus + species uniqueness tests', function () {
       test('should return 400 status if cropVariety is posted w/o variety name', async (done) => {
         let cropVariety = fakeCropVariety(crop.crop_id);
         cropVariety.crop_variety_name = `${cropVariety.cropVariety_specie} - ${cropVariety.crop_variety_name}`;
@@ -546,5 +556,38 @@ describe('CropVariety Tests', () => {
     });
 
 
+  });
+
+  describe('Post Custom Crop and Custom variety', () => {
+    let crop;
+    beforeEach(async () => {
+      [crop] = await mocks.cropFactory({ promisedFarm: [farm] });
+    });
+
+    test('Should return 400 status if posted without custom corp', async (done) => {
+      let cropVariety = fakeCropVariety(crop.crop_id);
+      let newCropAndVariety = { custom_crop_variety: cropVariety };
+      postNewCropAndVarietyRequest(newCropAndVariety, {}, (err, res) => {
+        expect(res.status).toBe(400);
+        done();
+      });
+    });
+
+    test('Should return 400 status if posted without custom variety', async (done) => {
+      let newCropAndVariety = { custom_crop: crop };
+      postNewCropAndVarietyRequest(newCropAndVariety, {}, (err, res) => {
+        expect(res.status).toBe(400);
+        done();
+      });
+    });
+
+    test('Should return 200 status', async (done) => {
+      let cropVariety = fakeCropVariety(crop.crop_id);
+      let newCropAndVariety = { custom_crop: crop, custom_crop_variety: cropVariety };
+      postNewCropAndVarietyRequest(newCropAndVariety, {}, (err, res) => {
+        expect(res.status).toBe(200);
+        done();
+      });
+    });
   });
 });

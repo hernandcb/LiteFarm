@@ -14,6 +14,7 @@
  */
 
 const cropVarietyController = require('../controllers/cropVarietyController');
+const cropController = require('../controllers/cropController');
 const express = require('express');
 const router = express.Router();
 const hasFarmAccess = require('../middleware/acl/hasFarmAccess');
@@ -25,5 +26,6 @@ router.get('/farm/:farm_id', hasFarmAccess({ params: 'farm_id' }), checkScope(['
 router.post('/', hasFarmAccess({ body: 'farm_id' }), checkScope(['add:crop_variety']), cropVarietyController.createCropVariety());
 router.put('/:crop_variety_id', hasFarmAccess({ params: 'crop_variety_id' }), checkScope(['edit:crop_variety']), cropVarietyController.updateCropVariety());
 router.delete('/:crop_variety_id', hasFarmAccess({ params: 'crop_variety_id' }), checkScope(['delete:crop_variety']), cropVarietyController.deleteCropVariety());
+router.post('/new_crop_and_variety', hasFarmAccess({ body: 'farm_id' }), checkScope(['add:crops','add:crop_variety']), cropVarietyController.createCustomCropAndVariety());
 
 module.exports = router;
