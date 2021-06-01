@@ -29,20 +29,26 @@ function PureCropDetail({
     control,
     formState: { errors, isValid },
   } = useForm({ mode: 'onChange', defaultValues: { ...variety } });
+  console.log({variety});
   const SEEDING_TYPE = 'seeding_type';
   const LIFECYCLE = 'lifecycle';
   const ORGANIC = 'organic';
   const TREATED = 'treated';
   const SEARCHED = 'searched';
   const GENETICALLY_ENGINEERED = 'genetically_engineered';
+  console.log({isEditing, isInterestedInOrganic});
   const isOrganic = isEditing ? watch(ORGANIC) : variety.organic;
+  console.log('watch(ORGANIC)', watch(ORGANIC));
+  const disabled = !isValid;
+  console.log({isValid, isOrganic});
+
   return (
     <Form
       onSubmit={handleSubmit(submitForm)}
       buttonGroup={
         <>
           {isEditing ? (
-            <Button disabled={!isValid} fullLength>
+            <Button disabled={disabled} fullLength>
               {t('common:UPDATE')}
             </Button>
           ) : (
@@ -140,7 +146,51 @@ function PureCropDetail({
             hookFormControl={control}
             name={ORGANIC}
           />
-          {!isOrganic && (
+          {/* <div> */}
+            {isOrganic === false && (
+              <>
+                <Main className={styles.labelToRadioDistance}>
+                  {t('CROP_DETAIL.COMMERCIAL_AVAILABILITY')}
+                  <Leaf style={{ marginLeft: '14px' }} />
+                </Main>
+                <RadioGroup
+                  disabled={!isEditing}
+                  style={{ paddingBottom: '16px' }}
+                  hookFormControl={control}
+                  required={!isOrganic}
+                  name={SEARCHED}
+                />
+                <Main className={styles.labelToRadioDistance}>
+                  {t('CROP_DETAIL.GENETICALLY_ENGINEERED')}
+                  <Leaf style={{ marginLeft: '14px' }} />
+                </Main>
+                <RadioGroup
+                  disabled={!isEditing}
+                  style={{ paddingBottom: '16px' }}
+                  hookFormControl={control}
+                  required={!isOrganic}
+                  name={GENETICALLY_ENGINEERED}
+                />
+                <Main className={styles.labelToRadioDistance}>
+                  {t('CROP_DETAIL.TREATED')}
+                  <Leaf style={{ marginLeft: '14px' }} />
+                </Main>
+                <RadioGroup disabled={!isEditing} hookFormControl={control} required={true} name={TREATED} showNotSure/>
+              </>
+            )}
+          {/* </div>
+          <div> */}
+            {isOrganic === true && (
+              <>
+                <Main className={styles.labelToRadioDistance}>
+                  {t('CROP_DETAIL.TREATED')}
+                  <Leaf style={{ marginLeft: '14px' }} />
+                </Main>
+                <RadioGroup disabled={!isEditing} hookFormControl={control} required={true} name={TREATED} showNotSure/>
+              </>
+            )}
+          {/* </div> */}
+          {/* {!isOrganic && (
             <>
               <Main className={styles.labelToRadioDistance}>
                 {t('CROP_DETAIL.COMMERCIAL_AVAILABILITY')}
@@ -150,6 +200,7 @@ function PureCropDetail({
                 disabled={!isEditing}
                 style={{ paddingBottom: '16px' }}
                 hookFormControl={control}
+                required={!isOrganic}
                 name={SEARCHED}
               />
               <Main className={styles.labelToRadioDistance}>
@@ -160,6 +211,7 @@ function PureCropDetail({
                 disabled={!isEditing}
                 style={{ paddingBottom: '16px' }}
                 hookFormControl={control}
+                required={!isOrganic}
                 name={GENETICALLY_ENGINEERED}
               />
             </>
@@ -168,7 +220,8 @@ function PureCropDetail({
             {t('CROP_DETAIL.TREATED')}
             <Leaf style={{ marginLeft: '14px' }} />
           </Main>
-          <RadioGroup disabled={!isEditing} hookFormControl={control} name={TREATED} showNotSure />
+          <RadioGroup disabled={!isEditing} hookFormControl={control} required={true} name={TREATED} showNotSure/> */}
+          
         </>
       )}
     </Form>
