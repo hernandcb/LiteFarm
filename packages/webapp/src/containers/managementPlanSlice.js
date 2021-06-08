@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { onLoadingFail, onLoadingStart } from './userFarmSlice';
+import { loginSelector, onLoadingFail, onLoadingStart } from './userFarmSlice';
 import { createSelector } from 'reselect';
 import { cropEntitiesSelector } from './cropSlice';
 import { lastActiveDatetimeSelector } from './userLogSlice';
@@ -13,7 +13,7 @@ import { rowSelectors } from './rowsSlice';
 import { broadcastSelectors } from './broadcastSlice';
 import { transplantContainerSelectors } from './transplantContainerSlice';
 
-const getManagementPlan = (obj) => {
+export const getManagementPlan = (obj) => {
   return pick(obj, [
     'crop_variety_id',
     'for_cover',
@@ -165,8 +165,11 @@ const managementPlanEntitiesSelector = createSelector(
 );
 
 export const managementPlansSelector = createSelector(
-  [managementPlanEntitiesSelector],
-  (managementPlanEntities) => Object.values(managementPlanEntities),
+  [managementPlanEntitiesSelector, loginSelector],
+  (managementPlanEntities, { farm_id }) =>
+    Object.values(managementPlanEntities).filter(
+      (managementPlan) => managementPlan.farm_id === farm_id,
+    ),
 );
 
 export const expiredManagementPlansSelector = createSelector(
@@ -332,7 +335,7 @@ export const cropVarietiesWithoutManagementPlanByCropIdSelector = (crop_id) =>
     cropVarieties.filter((cropVariety) => cropVariety.crop_id === crop_id),
   );
 
-const getUniqueEntities = (entities, key) => {
+export const getUniqueEntities = (entities, key) => {
   const entitiesByKey = {};
   for (const entity of entities) {
     entitiesByKey[entity[key]] = entity;
