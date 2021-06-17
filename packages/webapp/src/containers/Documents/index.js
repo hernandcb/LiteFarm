@@ -83,7 +83,6 @@ export default function Documents({ history }) {
         onChange={filterStringOnChange}
         isFilterActive={isFilterCurrentlyActive}
       />
-
       <div ref={containerRef}>
         {!isFilterCurrentlyActive && (
           <>
@@ -102,7 +101,7 @@ export default function Documents({ history }) {
                     return (
                       <PureDocumentTile
                         title={document.name}
-                        type={t(`DOCUMENTS.${document.type}`)}
+                        type={t(`DOCUMENTS.TYPE.${document.type}`)}
                         date={null}//getDisplayedDate(document.valid_until)}
                         preview={document.thumbnail_url}
                         onClick={tileClick}
@@ -123,7 +122,7 @@ export default function Documents({ history }) {
                     return (
                       <PureDocumentTile
                         title={document.name}
-                        type={t(`DOCUMENTS.${document.type}`)}
+                        type={t(`DOCUMENTS.TYPE.${document.type}`)}
                         date={getDisplayedDate(document.valid_until)}
                         preview={document.thumbnail_url}
                         onClick={tileClick}
