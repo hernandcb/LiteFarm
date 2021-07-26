@@ -126,13 +126,23 @@
 }
 
 .icon {
-  display: inline-flex;
+  display: flex;
   border-radius: 50%;
   width: 14px;
   height: 14px;
   background: var(--teal700);
-  color: #FFFFFF;
-  justify-content: center;
-  align-items: center;
-  font: 12px Open Sans;
+  justify-content: space-evenly;
 }
+
+.task {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 8px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+
