@@ -24,6 +24,7 @@ function PureBroadcastPlan({
   persistedPaths,
   locationSize,
   yieldPerArea,
+  historical,
 }) {
   const { t } = useTranslation(['translation']);
   const {
@@ -109,6 +110,10 @@ function PureBroadcastPlan({
     }
   }, [areaUsedUnit]);
 
+  const percentageLocationText = historical
+    ? t('BROADCAST_PLAN.HISTORICAL_PERCENTAGE_LOCATION')
+    : t('BROADCAST_PLAN.PERCENTAGE_LOCATION');
+
   return (
     <Form
       buttonGroup={
@@ -126,7 +131,7 @@ function PureBroadcastPlan({
         title={t('MANAGEMENT_PLAN.ADD_MANAGEMENT_PLAN')}
         style={{ marginBottom: '24px' }}
       />
-      <Main style={{ paddingBottom: '24px' }}>{t('BROADCAST_PLAN.PERCENTAGE_LOCATION')}</Main>
+      <Main style={{ paddingBottom: '24px' }}>{percentageLocationText}</Main>
       <Input
         hookFormRegister={register(PERCENTAGE_PLANTED, {
           required: true,
@@ -203,7 +208,8 @@ function PureBroadcastPlan({
             hookFormGetValue={getValues}
             hookFromWatch={watch}
             control={control}
-            required
+            required={!historical}
+            optional={historical}
             style={{ flex: '1 1 0px' }}
           />
           <Unit
@@ -218,7 +224,8 @@ function PureBroadcastPlan({
             hookFormGetValue={getValues}
             hookFromWatch={watch}
             control={control}
-            required
+            required={!historical}
+            optional={historical}
             style={{ flex: '1 1 0px' }}
           />
         </div>
