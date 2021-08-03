@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Main } from '../../Typography';
 import { ReactComponent as CalendarIcon } from '../../../assets/images/managementPlans/calendar.svg';
 import { useTranslation } from 'react-i18next';
-import { cropLocationByIdSelector } from '../../../selectors/cropLocation';
 import { useSelector } from 'react-redux';
 
 export default function PureManagementPlanCard ({
@@ -20,8 +19,6 @@ export default function PureManagementPlanCard ({
   const today = new Date();
 
   const transplant_date = plan.transplant_date;
-
-  //const location = cropLocationByIdSelector(plan.location_id);
 
   return (
     <div className={styles.card}>
