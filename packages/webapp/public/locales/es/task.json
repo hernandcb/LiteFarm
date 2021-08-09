@@ -11,11 +11,5 @@
   "WASH_AND_PACK": "Lavar y guardar",
   "PEST_CONTROL": "Control de pestes",
   "OTHER": "Otro",
-  "BREAK": "Descanso",
-  "SOIL_RESULTS": "MISSING",
-  "IRRIGATION": "MISSING",
-  "TRANSPORT": "MISSING",
-  "FIELD_WORK": "MISSING",
-  "PLANTING": "MISSING",
-  "SOCIAL": "MISSING"
+  "BREAK": "Descanso"
 }

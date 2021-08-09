@@ -11,7 +11,6 @@ export const getTask = (obj) => {
     'notes',
     'completion_notes',
     'owner_user_id',
-    'taskType',
     'type',
     'assignee_user_id',
     'coordinates',
@@ -24,7 +23,7 @@ export const getTask = (obj) => {
     'for_review_time',
     'abandoned_time',
     'locations',
-    'managementPlans',
+    'managementPlans'
   ]);
 };
 
@@ -65,14 +64,12 @@ export const {
 } = taskSlice.actions;
 export default taskSlice.reducer;
 
-export const taskReducerSelector = (state) => state.entitiesReducer[taskSlice.name];
+export const taskReducerSelector = (state) =>
+  state.entitiesReducer[taskSlice.name];
 
-export const taskSelectors = taskAdapter.getSelectors(
+const taskSelectors = taskAdapter.getSelectors(
   (state) => state.entitiesReducer[taskSlice.name],
 );
 
-export const taskEntitiesSelector = createSelector(taskReducerSelector, ({ ids, entities }) => {
-  return ids.map((id) => entities[id]);
-});
 
 export const taskSelectorById = (task_id) => (state) => taskSelectors.selectById(state, task_id);

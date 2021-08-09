@@ -274,9 +274,3 @@ export const getUserFarmSelector = (farmId, userId) => {
     byFarmIdUserId[farmId] && byFarmIdUserId[farmId][userId] ? byFarmIdUserId[farmId][userId] : {},
   );
 };
-
-export const getNameFromUserIdSelector = (userId) => {
-  return createSelector(userFarmsByFarmSelector, (usersInFarm) => {
-    return usersInFarm.find(({ user_id }) => user_id === userId);
-  });
-};
