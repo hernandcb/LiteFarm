@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Layout from '../../Layout';
 import PageTitle from '../../PageTitle/v2';
-import { Info, Underlined } from '../../Typography';
+import { Info } from '../../Typography';
 import { useTranslation } from 'react-i18next';
 import Button from '../../Form/Button';
 import ReactSelect from '../../Form/ReactSelect';
@@ -13,7 +13,15 @@ import Input from '../../Form/Input';
 
 const PureAbandonTask = ({ onSubmit, onGoBack }) => {
   const { t } = useTranslation();
-  const { register, handleSubmit, getValues, watch, control, setValue } = useForm({});
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    watch,
+    control,
+    setValue,
+    formState: { isValid, errors },
+  } = useForm({ mode: 'onTouched' });
 
   const REASON_FOR_ABANDONMENT = 'reason_for_abandonment';
   const OTHER_REASON_FOR_ABANDONMENT = 'other_reason_for_abandonment';
@@ -30,11 +38,12 @@ const PureAbandonTask = ({ onSubmit, onGoBack }) => {
     { label: t('TASK.ABANDON.REASON.SCHEDULING_ISSUE'), value: 'SCHEDULING_ISSUE' },
     { label: t('TASK.ABANDON.REASON.OTHER'), value: 'OTHER' },
   ];
+  console.log(errors, isValid, reason_for_abandonment);
 
   return (
     <Layout
       buttonGroup={
-        <Button disabled={false} onClick={onSubmit} fullLength>
+        <Button disabled={!isValid} onClick={onSubmit} fullLength>
           {t('TASK.ABANDON.ABANDON')}
         </Button>
       }
@@ -46,16 +55,16 @@ const PureAbandonTask = ({ onSubmit, onGoBack }) => {
       <Controller
         control={control}
         name={REASON_FOR_ABANDONMENT}
-        render={({ field }) => (
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <ReactSelect
             options={abandonmentReasonOptions}
             label={t('TASK.ABANDON.REASON_FOR_ABANDONMENT')}
-            required={true}
             style={{ marginBottom: '24px' }}
-            {...field}
+            onChange={onChange}
+            value={value}
           />
         )}
-        rules={{ required: true }}
       />
 
       {reason_for_abandonment?.value === 'OTHER' && (
