@@ -120,6 +120,7 @@ export default function PureNavBar({
     'certifications',
     'crop_group',
   ]);
+  // TODO: move useSelector and dispatches up to container
   const { introduce_map, navigation } = useSelector(showedSpotlightSelector);
   const isIntroducingFarmMap = !introduce_map && navigation;
   const isIntroducingCertifications = useSelector(isIntroducingCertificationsSelector);
