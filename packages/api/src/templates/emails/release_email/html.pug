@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans&display=swap')
+        style
+            include ../style.css
+    body
+        .background
+            .main-container
+                .header
+                    img#logo(src=`${imgBaseUrl}/logo.png` alt='Logo')
+                .main-content
+                    p
+                        span=`${t('MASS_EMAIL.DEAR_ALL')} `
+                    block content
+                    p
+                        span=`${t('TEMPLATE.CHEERS')},`
+                        br
+                        span=`${t('TEMPLATE.LITEFARM_TEAM')}`
+                    block content
+                        p
+                            span=`${t('MASS_EMAIL.CHANGES')} `
+
+            .footer
+                p=`${t('TEMPLATE.NO_RESPONSE')}`
+                p
+                    | &copy; #{year}
+                    |
+                    a(href='https://litefarm.org') LiteFarm.org

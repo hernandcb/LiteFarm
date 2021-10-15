@@ -29,8 +29,10 @@ const emails = {
   HELP_REQUEST_EMAIL: { path: 'help_request_email' },
   MAP_EXPORT_EMAIL: { path: 'map_export_email' },
   EXPORT_EMAIL: { path: 'export_email' },
+  Q3_2021_RELEASE: { path: 'release_email' },
 };
 
+console.log(credentials);
 function homeUrl(defaultUrl = 'http://localhost:3000') {
   const environment = process.env.NODE_ENV || 'development';
   let homeUrl = defaultUrl;
@@ -73,7 +75,7 @@ function sendEmail(template_path, replacements, email_to, {
   sender = 'system@litefarm.org',
   buttonLink = null,
   attachments = [],
-}) {
+}, multipleRecipients = []) {
   try {
     replacements.url = homeUrl();
     replacements.year = new Date().getFullYear();
@@ -89,6 +91,9 @@ function sendEmail(template_path, replacements, email_to, {
     };
     if (template_path.path === emails.HELP_REQUEST_EMAIL.path) {
       mailOptions.message.cc = 'support@litefarm.org';
+    }
+    if(multipleRecipients.length > 0) {
+      mailOptions.message.bcc = multipleRecipients;
     }
     if (attachments.length && attachments[0] && [emails.HELP_REQUEST_EMAIL.path, emails.MAP_EXPORT_EMAIL.path].includes(template_path.path)) {
       mailOptions.message.attachments = attachments.map(file => ({
