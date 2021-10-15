@@ -11,15 +11,40 @@ html
                     img#logo(src=`${imgBaseUrl}/logo.png` alt='Logo')
                 .main-content
                     p
-                        span=`${t('MASS_EMAIL.DEAR_ALL')} `
+                        span=`${t('OCT_RELEASE.DEAR_ALL')},`
                     block content
                     p
-                        span=`${t('TEMPLATE.CHEERS')},`
+                        span=`${t('OCT_RELEASE.P1')}`
+                    p
+                        span=`${t('OCT_RELEASE.P2.PART_1')} `
+                        a(href='https://www.litefarm.org/post/litefarm-now-heavy-with-features')=`${t('OCT_RELEASE.P2.PART_2')}`
+                        span=`.`
+                        br
+                        strong=`${t('OCT_RELEASE.P2.PART_3')}`
+                        span=`, ${t('OCT_RELEASE.P2.PART_4')}:`
+                    ul
+                        li=`${t('OCT_RELEASE.FEATURE_LIST.UNLIMITED_CUSTOM_CROP')}`
+                        li=`${t('OCT_RELEASE.FEATURE_LIST.CROP_MANAGEMENT_PLANS')}`
+                        li=`${t('OCT_RELEASE.FEATURE_LIST.TASKS')}`
+                        li=`${t('OCT_RELEASE.FEATURE_LIST.DOCUMENTS')}`
+                        li=`${t('OCT_RELEASE.FEATURE_LIST.EXPORT_CERTIFICATION')}`
+                        li=`${t('OCT_RELEASE.FEATURE_LIST.IMPROVEMENTS')}`
+                    p
+                        span=`${t('OCT_RELEASE.P3.PART_1')} `
+                        a(href='https://litefarm.org')=`litefarm.org`
+                        span=` ${t('OCT_RELEASE.P3.PART_2')} `
+                        a(href='https://www.youtube.com/playlist?list=PLDRpVZ4VsXJgVGrmmXJooNqceXvre8IDY')=`${t('OCT_RELEASE.P3.PART_3')}`
+                        span=` ${t('OCT_RELEASE.P3.PART_4')}.`
+                    p
+                        span=`${t('OCT_RELEASE.P4')}`
+                    p
+                        span=`${t('OCT_RELEASE.P5')}`
+                    block content
+                    p
+                        span=`${t('TEMPLATE.SINCERELY')},`
                         br
                         span=`${t('TEMPLATE.LITEFARM_TEAM')}`
-                    block content
-                        p
-                            span=`${t('MASS_EMAIL.CHANGES')} `
+
 
             .footer
                 p=`${t('TEMPLATE.NO_RESPONSE')}`

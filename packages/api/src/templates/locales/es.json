@@ -14,7 +14,8 @@
     "GET_IN_TOUCH": "Para ponerse en contacto con nosotros, haga clic en",
     "HELP": "Ayuda",
     "OR": "o",
-    "CONTACT": "Contacta con nosotres"
+    "CONTACT": "Contacta con nosotres",
+    "SINCERELY": "Atentamente"
   },
   "INVITE": {
     "GREAT_FOLK": "Las personas de",
@@ -93,9 +94,36 @@
     "SUBJECT": "EXPORT.SUBJECT",
     "PRIVACY": "EXPORT.PRIVACY"
   },
-  "MASS_EMAIL" : {
+  "MASS_EMAIL": {
     "SUBJECT": "Entrega de Octubre",
     "DEAR_ALL": "Usuarios de Litefarm.",
     "CHANGES": "We have introduced all of this exciting features. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+  },
+  "OCT_RELEASE": {
+    "SUBJECT": "Nuestro próximo lanzamiento",
+    "DEAR_ALL": "Estimada comunidad de LiteFarm",
+    "P1": "Los últimos meses han sido bastante tumultuosos. Desde la pandemia actual de COVID-19 hasta la agitación política y los eventos climáticos extremos, no han faltado las dificultades que enfrentamos nosotros, nuestras comunidades y el planeta. Pero, aunque los tiempos siguen siendo difíciles, hemos encontrado fuerzas juntos. La comunidad de LiteFarm ha crecido hasta incluir a más de 1200 agricultores en más de 70 países. Nos inspiras y esperamos hacerles la vida un poco más fácil.",
+    "P2": {
+      "PART_1": "Le escribimos hoy para brindarle algunas notificaciones sobre la plataforma LiteFarm. Durante los últimos meses, nuestro equipo ha estado trabajando diligentemente para ofrecerle algunas fantásticas",
+      "PART_2": "funciones nuevas",
+      "PART_3": "A partir del 30 de octubre",
+      "PART_4": "podrá"
+    },
+    "FEATURE_LIST": {
+      "UNLIMITED_CUSTOM_CROP": "Crear variedades de cultivos personalizadas ilimitadas, desde nuestra nueva base de datos de más de 375 tipos de cultivos diferentes.",
+      "CROP_MANAGEMENT_PLANS": "Crear planes de manejo de cultivos para cientos de plantas anuales y perennes, incluidas consideraciones especiales para cultivos de cobertura, cultivos silvestres cosechados, sucesión de plantaciones y prácticas agroforestales",
+      "TASKS": "Crear y asignar tareas para muchas actividades agrícolas diferentes a cualquier persona que tenga acceso a su granja, y realizar un seguimiento de cuándo se completan las tareas en tiempo real",
+      "DOCUMENTS": "Cargar documentos y facturas desde un archivo o directamente desde la cámara de su teléfono inteligente a LiteFarm para mantener organizados sus documentos financieros y de certificación orgánica.",
+      "EXPORT_CERTIFICATION": "Exportar documentos de certificación para orgánico y agroecológico que contengan el mapa de su granja, registros de cultivos, insumos y agentes de limpieza, así como facturas y documentos de respaldo que haya cargado durante la temporada",
+      "IMPROVEMENTS": "¡Cientos de otras pequeñas mejoras y correcciones de errores!"
+    },
+    "P3": {
+      "PART_1": "Como parte de esta actualización, también actualizamos el sitio",
+      "PART_2": "para compartir algunas de sus historias de éxito. También estamos agregando activamente videos como",
+      "PART_3": "guías de capacitación",
+      "PART_4": "en inglés, español y portugués para comenzar con la aplicación"
+    },
+    "P4": "Desde el principio, LiteFarm ha sido una colaboración entre agricultores, científicos y profesionales del software, y su aporte sigue siendo nuestra estrella guía. Si le encanta la aplicación, cree que podríamos estar mejor o simplemente desea compartir su historia, comuníquese con community@litefarm.org.",
+    "P5": "De parte de todos nosotros en LiteFarm, ¡gracias por ser parte de nuestra comunidad mientras cultivamos buenos alimentos juntos!"
   }
 }

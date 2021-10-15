@@ -7,7 +7,8 @@
     "GET_IN_TOUCH": "Para entrar em contato conosco, clique",
     "HELP": "Ajuda",
     "OR": "ou",
-    "CONTACT": "contate-nos"
+    "CONTACT": "contate-nos",
+    "SINCERELY": "Atenciosamente"
   },
   "HELP_REQUEST": {
     "RESPONSE": "Obrigado por nos contatar. Alguém do nosso time de suporte entrará em contato dentro de 48 horas. Um resumo do seu pedido está mostrado abaixo.",
@@ -93,9 +94,36 @@
     "SUBJECT": "EXPORT.SUBJECT",
     "PRIVACY": "EXPORT.PRIVACY"
   },
-  "MASS_EMAIL" : {
+  "MASS_EMAIL": {
     "SUBJECT": "Entrega de Octubre",
     "DEAR_ALL": "Usuarios de litefarm",
     "CHANGES": "We have introduced all of this exciting features. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+  },
+  "OCT_RELEASE": {
+    "SUBJECT": "Nosso próximo lançamento",
+    "DEAR_ALL": "Cara Comunidade LiteFarm",
+    "P1": "Os últimos meses foram bastante tumultuados. Desde a atual pandemia de COVID-19, passando por convulsões políticas e eventos climáticos extremos, não faltaram dificuldades que estão sendo enfrentadas por nós, nossas comunidades e o planeta. Mas, embora os tempos ainda sejam difíceis, encontramos forças juntos. A comunidade LiteFarm cresceu para incluir mais de 1.200 agricultores em mais de 70 países. Você nos inspira e esperamos tornar suas vidas um pouco mais fáceis.",
+    "P2": {
+      "PART_1": "Estamos escrevendo hoje para fornecer algumas atualizações sobre a plataforma LiteFarm. Nos últimos meses, nossa equipe tem trabalhado diligentemente para trazer a você alguns excelentes",
+      "PART_2": "recursos novos",
+      "PART_3": "A partir de 30 de outubro",
+      "PART_4": "você poderá"
+    },
+    "FEATURE_LIST": {
+      "UNLIMITED_CUSTOM_CROP": "Criar variedades de culturas personalizadas ilimitadas, construindo a partir do nosso novo banco de dados, com mais de 375 tipos de culturas diferentes",
+      "CROP_MANAGEMENT_PLANS": "Criar planos de gestão de culturas para centenas de plantas anuais e perenes, incluindo considerações especiais para culturas de cobertura, alimentos silvestres colhidos, plantio sucessório e práticas agroflorestais",
+      "TASKS": "Criar e atribuir diferentes tarefas agrícolas a qualquer pessoa que tenha acesso à sua fazenda e acompanhe quando as tarefas são concluídas em tempo real",
+      "DOCUMENTS": "Carregar documentos e recibos de um arquivo ou diretamente da câmera do seu smartphone para  LiteFarm a fim de manter suas finanças e documentos de certificação orgânica organizados",
+      "EXPORT_CERTIFICATION": "Exportar documentos de certificação orgânica e agroecológica contendo o mapa da fazenda, safra, insumos e registros de agente de limpeza, bem como recibos e documentos de apoio que você carregou ao longo da temporada",
+      "IMPROVEMENTS": "Centenas de outras pequenas melhorias e correções de bugs!"
+    },
+    "P3": {
+      "PART_1": "Como parte dessa atualização, também atualizamos o site",
+      "PART_2": "para compartilhar algumas de suas histórias de sucesso. Também estamos adicionando",
+      "PART_3": "guias de treinamento em formato de vídeo",
+      "PART_4": "em inglês, espanhol e português, para ensinar o passo-a-passo inicial de uso do aplicativo"
+    },
+    "P4": "Desde o início, o LiteFarm tem sido uma colaboração entre agricultores, cientistas e profissionais de software, e sua contribuição continua a ser nossa estrela guia. Se você está amando o aplicativo, acha que poderíamos estar fazendo melhor ou apenas deseja compartilhar sua história - por favor, entre em contato pelo e-mail community@litefarm.org.",
+    "P5": "De todos nós da LiteFarm, agradecemos por fazer parte da nossa comunidade enquanto cultivamos bons alimentos juntos!"
   }
 }
